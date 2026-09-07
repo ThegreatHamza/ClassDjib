@@ -4,14 +4,29 @@
 
 Phone-first classroom command center for Djiboutian teachers and students.
 
-## Included in this build
+## Current build
 - Responsive mobile-first React + TypeScript + Vite UI
-- Teacher/student demo mode with role switching
-- French / English / Arabic UI with live Arabic RTL
-- Teacher dashboard, class cards, quick actions, student dashboard, tasks, notifications and profile
-- PWA manifest + service worker foundation
-- Supabase client bootstrap
-- PostgreSQL schema with core classroom entities, indexes and initial RLS policies
+- French / English / Arabic-ready foundation
+- Supabase Auth with persistent browser sessions
+- Live PostgreSQL data protected by Supabase RLS
+- Teacher class creation with generated join codes
+- Student class joining with join codes
+- Live lessons, assignments, quizzes and announcements
+- Assignment submission service
+- Attendance and grade data services
+- Notifications and read-state service
+- Profile service
+- PWA foundation
+
+## Supabase
+The app is connected to the dedicated `ClassDjib` Supabase project in EU West 3 (Paris). The browser uses the Supabase publishable key and relies on RLS for authorization. Never put a service-role key in the frontend.
+
+For another environment, copy `.env.example` to `.env.local` and provide:
+
+```bash
+VITE_SUPABASE_URL=https://neexmhqiungzvbszbzgr.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=your_publishable_key
+```
 
 ## Run
 ```bash
@@ -19,7 +34,12 @@ npm install
 npm run dev
 ```
 
-Copy `.env.example` to `.env.local` and add your Supabase URL/anon key to connect the client. The UI currently falls back to demo data when Supabase variables are absent.
+## Main live workflows
+1. Register or sign in.
+2. Teacher creates a class and shares its join code.
+3. Student registers and joins using the code.
+4. Teacher publishes lessons, assignments, quizzes and announcements.
+5. Classroom data is read and written directly through Supabase with RLS enforcement.
+6. Notifications and profile data are persisted in PostgreSQL.
 
-## Next implementation phase
-Wire the existing UI to Supabase Auth and the schema, then implement real class creation/joining, lessons, assignments, submissions, quizzes, attendance, grading, notifications and AI Edge Functions according to `docs/CLASSDJIB_MASTER_BUILD_PROMPT.md`.
+The next phase can add the richer quiz builder/auto-grading UI, attendance roster, gradebook, file storage, realtime notifications and AI Edge Functions.
