@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from './lib/supabase'
 import './styles.css'
 
-export default function App() {
+export function App() {
   const [session, setSession] = useState<any>(null)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
